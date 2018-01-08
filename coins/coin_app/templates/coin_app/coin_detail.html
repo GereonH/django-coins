@@ -1,0 +1,38 @@
+{% extends "coin_app/coin_app_base.html" %}
+{% load cmc_logger %}
+{% block body_block %}
+    <div class="jumbotron">
+        <div class="container">
+            <div class="row" diplay="inline">
+                <h1>#{{coin_detail.coin_id|get_json_by_id:'rank'}}</h1>
+                <img src="{{coin_detail.coin_id|get_png_by_id:'64x64'}}" alt="">
+                <h1>  {{coin_detail.coin_id|get_json_by_id:'name'}} <small>({{coin_detail.coin_id|get_json_by_id:'symbol'}})</small> </h1>
+            </div>
+            <br>
+            <p>Preis USD {{coin_detail.coin_id|get_json_by_id:'price_usd'}}$</p>
+            <p>Preis BTC {{coin_detail.coin_id|get_json_by_id:'price_btc'}}BTC</p>
+            <table style="width:70%" class="table">
+                <thead>
+                    <tr>
+                        <th>Change 1h</th>
+                        <th>Change 24h</th>
+                        <th>Change 7d</th>
+                    </tr>
+                </thead>
+
+                <tr>
+                    <td>{{coin_detail.coin_id|get_json_by_id:'percent_change_1h'}}%</td>
+                    <td>{{coin_detail.coin_id|get_json_by_id:'percent_change_24h'}}%</td>
+                    <td>{{coin_detail.coin_id|get_json_by_id:'percent_change_7d'}}%</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="container">
+        <p>
+            <a class="btn btn-warning" href="{% url 'coin_app:update' pk=coin_detail.pk %}">Update</a>
+            <a class="btn btn-danger" href="{% url 'coin_app:delete' pk=coin_detail.pk %}">Delete</a>
+        </p>
+    </div>
+{% endblock %}
