@@ -31,13 +31,13 @@ class CoinDeleteView(DeleteView):
 @method_decorator(login_required, name='dispatch')
 class HoldingsListView(ListView):
     model = models.Holdings
-    
+
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)
 
 @method_decorator(login_required, name='dispatch')
 class HoldingsCreateView(CreateView):
-    fields = ('coin_id','amount','currency','user',)
+    fields = ('coin_id','amount','user',)
     model = models.Holdings
 
     def dispatch(self, *args, **kwargs):

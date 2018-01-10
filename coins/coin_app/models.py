@@ -23,12 +23,7 @@ class Exchange(models.Model):
 
 
 class Holdings(models.Model):
-    CURRENCY_CHOICES = (
-        ('EUR', 'EUR (€)'),
-        ('USD', 'USD($)'),
-    )
 
     coin_id = models.ForeignKey(Coin, on_delete=models.CASCADE, blank=True)
     amount = models.DecimalField(max_digits=60, decimal_places=10)
-    currency = models.CharField(max_length=3, choices=CURRENCY_CHOICES, default='EUR')
-    user = models.ForeignKey(User, default='')
+    user = models.ForeignKey(User, default=None)
