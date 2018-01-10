@@ -1,0 +1,21 @@
+{% extends "coin_app/coin_app_base.html" %}
+{% block body_block %}
+
+    <h1>
+        {% if not form.instance.pk %}
+            Create Holding
+        {% else %}
+            Update Holding
+        {% endif %}
+    </h1>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.as_p }}
+            <a class="btn btn-secondary" href="{% url 'coin_app:holdings_list' %}">Cancel</a>
+            <input type="submit" class="btn btn-primary" name="" value="Submit">
+        </div>
+    </form>
+
+{% endblock %}

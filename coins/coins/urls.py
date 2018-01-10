@@ -20,5 +20,6 @@ from coin_app import views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.IndexView.as_view()),
-    url(r'^coin_app/',include('coin_app.urls', namespace='coin_app'))
+    url(r'^coin_app/',include('coin_app.urls', namespace='coin_app')),
+    url(r'^accounts/', include('accounts.urls', namespace='accounts')),
 ]

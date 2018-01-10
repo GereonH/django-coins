@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from django.core.urlresolvers import reverse_lazy
-from django.views.generic import View,TemplateView,ListView,DetailView,CreateView,UpdateView,DeleteView
+from django.core.urlresolvers import reverse_lazy, reverse
+from django.views.generic import View,TemplateView,ListView,DetailView,CreateView,UpdateView,DeleteView,FormView,RedirectView
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from coin_app import models
 
 class IndexView(TemplateView):
@@ -25,3 +27,18 @@ class CoinUpdateView(UpdateView):
 class CoinDeleteView(DeleteView):
     model = models.Coin
     success_url = reverse_lazy("coin_app:list")
+
+@method_decorator(login_required, name='dispatch')
+class HoldingsListView(ListView):
+    model = models.Holdings
+    
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+
+@method_decorator(login_required, name='dispatch')
+class HoldingsCreateView(CreateView):
+    fields = ('coin_id','amount','currency','user',)
+    model = models.Holdings
+
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
