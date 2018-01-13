@@ -25,5 +25,11 @@ class Exchange(models.Model):
 class Holdings(models.Model):
 
     coin_id = models.ForeignKey(Coin, on_delete=models.CASCADE, blank=True)
-    amount = models.DecimalField(max_digits=60, decimal_places=10)
+    amount = models.DecimalField(max_digits=60, decimal_places=4)
     user = models.ForeignKey(User, default=None)
+
+    def __str__(self):
+        return '%s %s' % (self.coin_id, self.user)
+
+    def get_absolute_url(self):
+        return reverse("coin_app:detail",kwargs={'pk':self.pk})

@@ -10,7 +10,7 @@ def signup_view(request):
             user = form.save()
             # log user in
             login(request,user)
-            return redirect('coin_app:holdings_list')
+            return redirect('coin_app:holdings')
     else:
         form = UserCreationForm()
     return render(request, 'accounts/signup.html',{'form':form})
@@ -25,7 +25,7 @@ def login_view(request):
             if 'next' in request.POST:
                 return redirect(request.POST.get("next"))
             else:
-                return redirect('coin_app:holdings_list')
+                return redirect('coin_app:holdings')
     else:
         form = AuthenticationForm()
     return render(request,"accounts/login.html",{'form':form})

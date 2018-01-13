@@ -1,6 +1,34 @@
 {% extends "coin_app/coin_app_base.html" %}
+{% load cmc_logger %}
+{% load mathfilters %}
 {% block body_block %}
-    <h1>Welcome to your holdings</h1>
+    <h1>Deine Cryptos</h1>
+    <br><br>
+    <table style="width:100%" class="table">
+        <thead>
+            <tr>
+                <th>Crypto</th>
+                <th>Ticker</th>
+                <th>Anzahl Crypto</th>
+                <th>Preis USD</th>
+                <th>Wert</th>
+                <th>Änderung 24h</th>
+            </tr>
+        </thead>
+        {% for holdings in holdings %}
+            <tr>
+                <td><a href="{% url 'coin_app:detail' holdings.coin_id.id %}"><img src="{{holdings.coin_id|get_png_by_id:'32x32'}}" alt="">  {{ holdings.coin_id|get_json_by_id:'name'}}</a></td>
+                <td>{{ holdings.coin_id|get_json_by_id:'symbol' }}</td>
+                <td> <div class="mx-1">
+                    <a href="{% url 'coin_app:holdings_update' holdings.id %}" class="btn btn-warning"><strong>{{ holdings.amount }}&nbsp;&nbsp;&nbsp;&nbsp;</strong><img src="https://www.shareicon.net/data/512x512/2015/12/04/681989_edit_512x512.png" height="16" alt=""> </a>
+                </div></td>
+                <td>{{ holdings.coin_id|get_json_by_id:'price_usd'}}$</td>
+                <td>{{ holdings.coin_id|get_json_by_id:'price_usd'|mul:holdings.amount }}</td>
+                <td>{{ holdings.coin_id|get_json_by_id:'percent_change_24h'}}%</td>
+            </tr>
+        {% endfor %}
 
+
+    </table>
 
 {% endblock %}

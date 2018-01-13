@@ -2,14 +2,10 @@
 {% load cmc_logger %}
 {% block body_block %}
     <h1>Welcome to a Coin List</h1>
-    <div class="container">
-        <a href="{% url 'coin_app:create' %}" class="btn btn-success">Add new Coin</a>
-    </div>
     <br><br>
     <table style="width:100%" class="table">
         <thead>
             <tr>
-                <th>#</th>
                 <th>Name</th>
                 <th>Price USD</th>
                 <th>Change 24h</th>
@@ -17,8 +13,7 @@
         </thead>
         {% for coin in coin_list %}
             <tr>
-                <td>{{ coin.coin_id|get_json_by_id:'rank'}}</td>
-                <td><a href="{{coin.id}}"><img src="{{coin.coin_id|get_png_by_id:'32x32'}}" alt="">  {{ coin.coin_id|get_json_by_id:'name'}}</a></td>
+                <td><a href="{% url 'coin_app:detail' coin.id %}"><img src="{{coin.coin_id|get_png_by_id:'32x32'}}" alt="">  {{ coin.coin_id|get_json_by_id:'name'}}</a></td>
                 <td>{{ coin.coin_id|get_json_by_id:'price_usd'}}$</td>
                 <td>{{ coin.coin_id|get_json_by_id:'percent_change_24h'}}%</td>
             </tr>
