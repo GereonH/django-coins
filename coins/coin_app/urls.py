@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^coins/update/(?P<pk>\d+)/$',views.CoinUpdateView.as_view(), name="update"),
     url(r'^coins/delete/(?P<pk>\d+)/$',views.CoinDeleteView.as_view(), name="delete"),
     url(r'^holdings/$', views.HoldingsMutipleModelView.as_view(),name="holdings"),
-    url(r'^holdings/create_holding/$', views.HoldingsCreateView.as_view(),name="holdings_create"),
+    url(r'^holdings/create/$', views.HoldingsCreateView.as_view(),name="holdings_create"),
     url(r'^holdings/update/(?P<pk>\d+)/$',views.HoldingsUpdateView.as_view(), name="holdings_update"),
     url(r'^holdings/(?P<pk>\d+)/$',views.HoldingsDetailView.as_view(), name="holdings_detail"),
 

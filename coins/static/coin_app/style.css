@@ -1,0 +1,16 @@
+.alignright {
+    text-align: right;
+}
+
+.aligncenter {
+    text-align: center;
+}
+
+.img_right {
+    float: right;
+}
+
+a, a:hover {
+    text-decoration:none;
+    color: inherit;
+}

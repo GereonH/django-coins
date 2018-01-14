@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.utils.decorators import method_decorator
 from coin_app import models
 from coin_app.models import Coin,Holdings,Exchange
+from coin_app.templatetags import cmc_logger
 
 class IndexView(generic.TemplateView):
     template_name = 'coin_app/coin_index.html'
@@ -15,6 +16,7 @@ class CoinListView(generic.ListView):
 
     def get_queryset(self):
         return Coin.objects.order_by('id')
+
 
 class CoinDetailView(generic.DetailView):
     context_object_name = 'coin_detail'
@@ -42,16 +44,17 @@ class HoldingsMutipleModelView(generic.TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(HoldingsMutipleModelView, self).get_context_data(**kwargs)
-        context['coin'] = Coin.objects.all()
+        context['coin']     = Coin.objects.all()
+        context['exchange'] = Exchange.objects.all()
         context['holdings'] = Holdings.objects.filter(user=self.request.user)
         return context
 
 
-
 @method_decorator(login_required, name='dispatch')
 class HoldingsCreateView(generic.CreateView):
-    fields = ('coin_id','amount','user',)
+    fields = ('coin_id', 'exchange' ,'amount','user', )
     model = models.Holdings
+    success_url = reverse_lazy("coin_app:holdings")
 
     def dispatch(self, *args, **kwargs):
         return super().dispatch(*args, **kwargs)

@@ -2,33 +2,62 @@
 {% load cmc_logger %}
 {% load mathfilters %}
 {% block body_block %}
-    <h1>Deine Cryptos</h1>
+    <br>
+    <div class="container">
+        <button id="total" type="button" class="btn btn-info btn-lg btn-block">
+            You have not enabled JavaScript
+        </button>
+    </div>
     <br><br>
-    <table style="width:100%" class="table">
-        <thead>
-            <tr>
-                <th>Crypto</th>
-                <th>Ticker</th>
-                <th>Anzahl Crypto</th>
-                <th>Preis USD</th>
-                <th>Wert</th>
-                <th>Änderung 24h</th>
-            </tr>
-        </thead>
-        {% for holdings in holdings %}
-            <tr>
-                <td><a href="{% url 'coin_app:detail' holdings.coin_id.id %}"><img src="{{holdings.coin_id|get_png_by_id:'32x32'}}" alt="">  {{ holdings.coin_id|get_json_by_id:'name'}}</a></td>
-                <td>{{ holdings.coin_id|get_json_by_id:'symbol' }}</td>
-                <td> <div class="mx-1">
-                    <a href="{% url 'coin_app:holdings_update' holdings.id %}" class="btn btn-warning"><strong>{{ holdings.amount }}&nbsp;&nbsp;&nbsp;&nbsp;</strong><img src="https://www.shareicon.net/data/512x512/2015/12/04/681989_edit_512x512.png" height="16" alt=""> </a>
-                </div></td>
-                <td>{{ holdings.coin_id|get_json_by_id:'price_usd'}}$</td>
-                <td>{{ holdings.coin_id|get_json_by_id:'price_usd'|mul:holdings.amount }}</td>
-                <td>{{ holdings.coin_id|get_json_by_id:'percent_change_24h'}}%</td>
-            </tr>
-        {% endfor %}
+    <div class="table-responsive">
+        <table style="width:100%" class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Crypto</th>
+                    <th>Ticker</th>
+                    <th class="aligncenter">Anzahl Crypto</th>
+                    <th class="alignright">Preis USD</th>
+                    <th class="alignright">Wert</th>
+                    <th class="alignright">Änderung 24h</th>
+                </tr>
+            </thead>
+            <tbody class="holdings_table">
+            {% for holdings in holdings %}
+                <tr>
+                    <td><a href="{% url 'coin_app:detail' holdings.coin_id.id %}"><img src="{{holdings.coin_id|get_png_by_id:'32x32'}}" alt="">  {{ holdings.coin_id|get_json_by_id:'name'}}</a></td>
+                    <td>{{ holdings.coin_id|get_json_by_id:'symbol' }}</td>
+                    <td class="aligncenter"><a href="{% url 'coin_app:holdings_update' holdings.id %}"><div class="mx-1">
+                        <strong>{{ holdings.amount }}</strong><img class="img_right" src="https://www.shareicon.net/data/512x512/2015/12/04/681989_edit_512x512.png" height="16" alt="">
+                    </div></a></td>
+                    <td class="alignright">{{ holdings.coin_id|get_json_by_id:'price_usd'}} $</td>
+                    <td class="alignright" id="value{{ forloop.counter }}">{{ holdings.coin_id|get_json_by_id:'price_usd'|mul:holdings.amount }}$</td>
+                    <td class="alignright">{{ holdings.coin_id|get_json_by_id:'percent_change_24h'}} %</td>
+                </tr>
+            {% endfor %}
+                <tr class="table-info">
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td class="alignright" id="subtotal"></td>
+                    <td></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}
+{% block custom_scripts %}
+    <script>
+        var total       = 0;
+        number_of_tr    = document.querySelectorAll('.holdings_table tr').length;
+        for (i = 1; i < number_of_tr; i++) {
+            total += parseFloat(document.getElementById("value"+i).innerHTML);
+            document.getElementById("value"+i).innerHTML = parseFloat(document.getElementById("value"+i).innerHTML).toFixed(2)+" $";
+        };
+        document.getElementById("total").innerHTML = "<strong>Gesamtwert "+total.toFixed(2)+" $ </strong>";
+        document.getElementById("subtotal").innerHTML = "<strong>"+total.toFixed(2)+" $</strong>";
 
 
-    </table>
-
+    </script>
 {% endblock %}

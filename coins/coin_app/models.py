@@ -24,12 +24,16 @@ class Exchange(models.Model):
 
 class Holdings(models.Model):
 
-    coin_id = models.ForeignKey(Coin, on_delete=models.CASCADE, blank=True)
-    amount = models.DecimalField(max_digits=60, decimal_places=4)
-    user = models.ForeignKey(User, default=None)
+    coin_id     = models.ForeignKey(Coin, on_delete=models.CASCADE, blank=True)
+    amount      = models.DecimalField(max_digits=60, decimal_places=4)
+    user        = models.ForeignKey(User, default=None)
+    exchange    = models.ForeignKey(Exchange, default=None)
+
+    class Meta:
+        unique_together = ('coin_id', 'user', 'exchange')
 
     def __str__(self):
-        return '%s %s' % (self.coin_id, self.user)
+        return '%s %s %s' % (self.coin_id, self.user, self.exchange)
 
     def get_absolute_url(self):
         return reverse("coin_app:detail",kwargs={'pk':self.pk})
