@@ -81,3 +81,13 @@ class BinanceAPIView(generic.TemplateView):
 
 class NewCoinsView(generic.TemplateView):
     template_name='coin_app/newcoins.html'
+
+    
+
+    # def testing(self):
+    #     summ = 1+1
+    #     return summ
+    #
+    # def etherparty(self):
+    #     fuel = cmc_logger.get_json_by_id('etherparty','rank')
+    #     return fuel
