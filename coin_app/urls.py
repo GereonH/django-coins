@@ -15,6 +15,7 @@ urlpatterns = [
     url(r'^holdings/create/$', views.HoldingsCreateView.as_view(), name="holdings_create"),
     url(r'^holdings/update/(?P<pk>\d+)/$',views.HoldingsUpdateView.as_view(), name="holdings_update"),
     url(r'^holdings/(?P<pk>\d+)/$',views.HoldingsDetailView.as_view(), name="holdings_detail"),
+    url(r'^newcoins/$', views.NewCoinsView.as_view(), name="newcoins"),
     url(r'^binance/$', views.BinanceAPIView.as_view(), name="binance"),
 
 ]

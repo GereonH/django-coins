@@ -78,3 +78,6 @@ class HoldingsUpdateView(generic.UpdateView):
 
 class BinanceAPIView(generic.TemplateView):
     template_name='coin_app/binance.html'
+
+class NewCoinsView(generic.TemplateView):
+    template_name='coin_app/newcoins.html'
