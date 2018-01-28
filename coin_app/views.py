@@ -7,6 +7,7 @@ from django.utils.decorators import method_decorator
 from coin_app import models
 from coin_app.models import Coin,Holdings,Exchange
 from coin_app.templatetags import cmc_logger
+import requests
 
 class IndexView(generic.TemplateView):
     template_name = 'coin_app/coin_index.html'
@@ -82,12 +83,21 @@ class BinanceAPIView(generic.TemplateView):
 class NewCoinsView(generic.TemplateView):
     template_name='coin_app/newcoins.html'
 
+    def gather_data(self):
+
+        # get top 10 coins in a list
+        r = requests.get('https://api.coinmarketcap.com/v1/ticker/?limit=10', params=None)
+        return r.json()
+
+    def gather_image(self,coin_id):
+        img_url = 'https://files.coinmarketcap.com/static/img/coins/128x128/'+id+'.png'
+        return img_url
 
 
-    def testing(self):
-        summ = 1+1
-        return summ
-
-    def etherparty(self):
-        fuel = cmc_logger.get_json_by_id('etherparty','rank')
-        return fuel
+    # def testing(self):
+    #     summ = 1+1
+    #     return summ
+    #
+    # def etherparty(self):
+    #     fuel = cmc_logger.get_json_by_id('etherparty','rank')
+    #     return fuel

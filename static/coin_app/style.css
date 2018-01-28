@@ -2,6 +2,11 @@
     text-align: right;
 }
 
+.alignleft {
+    text-align: left;
+    margin-left: 0;
+}
+
 .aligncenter {
     text-align: center;
 }
